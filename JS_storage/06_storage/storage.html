@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boules Loto - Storage</title>
+    <style>
+
+
+      button {
+        background-color: #007BFF;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: 0.3s;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      .boules {
+        margin-top: 20px;
+      }
+
+      .loto {
+        display: inline-block;
+        height: 60px;
+        width: 60px;
+        margin: 8px;
+        line-height: 60px;
+        text-align: center;
+        border-radius: 50%;
+        font-weight: bold;
+        font-size: 22px;
+        color: white;
+        box-shadow: inset -4px -4px 10px rgba(0,0,0,0.4),
+                    inset 4px 4px 10px rgba(255,255,255,0.2),
+                    0 4px 10px rgba(0,0,0,0.3);
+        transition: transform 0.15s ease-in-out;
+      }
+
+      .loto:hover {
+        transform: scale(1.1);
+      }
+
+      .rouge { background: #3498db; }
+      .bleu { background: #3498db; }
+      .vert { background:#3498db; }
+      .orange { background: #3498db; }
+      .violet { background: #3498db; }
+      .jaune { background: #3498db; }
+    </style>
+  </head>
+  <body>
+
+    <h1>LocalStorage & Boules Loto </h1>
+
+    <div>
+      <button id="generer">Générer les chiffres</button>
+    </div>
+
+    <div class="boules" id="reponse"></div>
+
+    <hr style="margin:40px 0;">
+
+    <div>
+      <label for="item">Entrez un nombre :</label>
+      <input type="number" name="item" id="item">
+      <button id="valider">Valider</button>
+    </div>
+
+    <p id="nombre"></p>
+
+    <p><a href="contenu.html">Voir le contenu</a></p>
+
+    <script>
+      const btnGenerer = document.getElementById('generer');
+      const pReponse = document.getElementById('reponse');
+
+      btnGenerer.addEventListener('click', () => {
+        pReponse.innerHTML = '';
+        let chiffres = [];
+        const couleurs = ['rouge', 'bleu', 'vert', 'orange', 'violet', 'jaune'];
+
+        for (let i = 0; i < 6; i++) {
+          let num = Math.floor(Math.random() * 36) + 1;
+          chiffres.push(num);
+
+          let boule = document.createElement('div');
+          boule.className = `loto ${couleurs[i % couleurs.length]}`;
+          boule.textContent = num;
+          pReponse.appendChild(boule);
+        }
+
+        sessionStorage.setItem('chiffres', JSON.stringify(chiffres));
+      });
+
+      const input = document.getElementById('item');
+      const buttonValider = document.getElementById('valider');
+      const pNombre = document.getElementById('nombre');
+
+      buttonValider.addEventListener('click', () => {
+        let myItem = input.value;
+        localStorage.setItem('nombre', myItem);
+
+        pNombre.className = 'loto bleu';
+        pNombre.textContent = myItem;
+
+        let prenoms = ["rakoto", "rabe", "rasoa"];
+        localStorage.setItem('prenoms', JSON.stringify(prenoms));
+      });
+    </script>
+  </body>
+</html>
